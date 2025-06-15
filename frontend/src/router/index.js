@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ProjectsList from '../views/ProjectsList.vue'
 import NewProjectDetail from '../views/NewProjectDetail.vue'
 import PricesSetup from '@/views/PricesSetup.vue'
-import Accesories from '@/views/Accesories.vue'
+import Accessories from '@/views/Accessories.vue'
 import Home from '@/views/Home.vue'
 import NewProjectProgress from '@/views/NewProjectProgress.vue'
 import CutOptimizer from '@/views/CutOptimizer.vue'
@@ -55,9 +55,9 @@ const routes = [
     component: PricesSetup
   },
   {
-    path: '/accesories',
-    name: 'Accesories',
-    component: Accesories
+    path: '/accessories',
+    name: 'Accessories',
+    component: Accessories
   },
   {
     path: '/cut-optimizer',

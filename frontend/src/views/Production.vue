@@ -66,11 +66,11 @@
                         <nav class="level" >
                             <div class="level-left">
 
-                                <div class="level-item" v-for="stage in order.stages">
+                                <div class="level-item" v-for="stage in order.order.production_stages">
                                     
                                     <label class="custom-checkbox">
                                         <input v-model="stage.is_done" type="checkbox" class="custom-checkbox-input">
-                                        <span class="custom-checkbox-label">{{ stage.stage.shortcut }}</span>
+                                        <span class="custom-checkbox-label">{{ stage.shortcut }}</span>
                                         <span class="custom-checkbox-checkmark"></span>
                                     </label>       
                                 </div>
@@ -238,7 +238,12 @@ function downloadEAN(id,data,order_number) {
 
 
 function isAnyStageTrue(stages) {
-    return stages.some(stage => stage.is_done === true);
+    if(productionList.value.length) {
+        console.log(productionList.value.length)
+        console.log(stages)
+        return stages.some(stage => stage.is_done === true);
+    }
+    
 }
 
 function areAllStagesTrue(stages) {
@@ -340,17 +345,22 @@ function updateDateOfDelivery(id, value, order_number) {
 
 watchEffect(async() => {
     for (let order of productionList.value) {
-        //console.log(`Order status: ${order.status}`)
-        if (isAnyStageTrue(order.stages)) {
+        console.log(`Order stages: ${order.order.production_stages}`)
+
+        if(order.order.production_stages) {
+            if (isAnyStageTrue(order.order.production_stages)) {
             order.status = "In progress"
             
         }
-        if(areAllStagesTrue(order.stages)) {
-            order.status = "Done"
+            if(areAllStagesTrue(order.order.production_stages)) {
+                order.status = "Done"
         }
-        else if(!isAnyStageTrue(order.stages)) {
-            order.status = "Pending"
+            else if(!isAnyStageTrue(order.order.production_stages)) {
+                order.status = "Pending"
         }
+
+        }
+        
     }
 })
 
@@ -382,9 +392,9 @@ watch(productionList, (newList) => {
                     updateNotes(newObject.order.id, note, newObject.order_number)
                 }
 
-                else if (JSON.stringify(oldObject.stages) !== JSON.stringify(newObject.stages)) {
+                else if (JSON.stringify(oldObject.production_stages) !== JSON.stringify(newObject.production_stages)) {
                     //console.log(`Stages changes from ${JSON.stringify(oldObject.stages)} \nto ${JSON.stringify(newObject.stages)}`)
-                    updateStages(newObject.order.id, newObject.stages, newObject.order_number)
+                    updateStages(newObject.order.id, newObject.production_stages, newObject.order_number)
                 }
 
                 else if(JSON.stringify(oldObject.date_of_delivery) !== JSON.stringify(newObject.date_of_delivery)) {

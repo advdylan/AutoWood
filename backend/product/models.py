@@ -147,13 +147,13 @@ class NewProject(models.Model):
     worktime_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     elements_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     elements_margin = models.DecimalField(max_digits=10,decimal_places=2, blank=True, null=True)
-    accesories_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    accesories_margin = models.DecimalField(max_digits=10,decimal_places=2, blank=True, null=True)
+    accessories_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    accessories_margin = models.DecimalField(max_digits=10,decimal_places=2, blank=True, null=True)
     additional_margin = models.DecimalField(max_digits=10,decimal_places=2, blank=True, null=True)
     summary_with_margin = models.DecimalField(max_digits=10,decimal_places=2, blank=True, null=True)
     summary_without_margin = models.DecimalField(max_digits=10,decimal_places=2, blank=True, null=True)
     percent_elements_margin = models.IntegerField(blank=True, null=True)
-    percent_accesories_margin = models.IntegerField(blank=True, null=True)
+    percent_accessories_margin = models.IntegerField(blank=True, null=True)
     percent_additional_margin = models.IntegerField(blank=True, null=True)
     production_stages = models.ManyToManyField('production.ProductionStage', blank=True)
 
@@ -209,7 +209,7 @@ class ProjectWorktime(models.Model):
     
 
 class AccessoryDetail(models.Model):
-    project = models.ForeignKey(NewProject, on_delete=models.CASCADE, related_name="project_accesories")
+    project = models.ForeignKey(NewProject, on_delete=models.CASCADE, related_name="project_accessories")
     type = models.ForeignKey(AccessoryType, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
 

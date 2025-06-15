@@ -93,7 +93,7 @@
           </div>
           
         </div>
-        <router-link to="/accesories" class="navbar-item">      
+        <router-link to="/accessories" class="navbar-item">      
           <i class="fa-solid fa-screwdriver-wrench fa-lg"></i>
           <div class="is-size-5">
             &nbsp;{{ $t("accesories")}}

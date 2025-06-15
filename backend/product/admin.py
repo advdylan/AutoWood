@@ -47,20 +47,6 @@ class AccessoryTypeAdmin(admin.ModelAdmin):
 
 admin.site.register(AccessoryType, AccessoryTypeAdmin)
 
-"""
-class AccessoryAdmin(admin.ModelAdmin):
-    list_display = ['display_type', 'quantity']
-    search_fields = ['type__name']  # You can search by the 'name' field of the 'type'
-    list_filter = ['type__name']  # You can filter by the 'name' field of the 'type'
-
-    def display_type(self, obj):
-        return ", ".join([type.name for type in obj.type.all()])
-
-
-admin.site.register(Accessory, AccessoryAdmin)
-"""
-
-
 class ElementAdmin(admin.ModelAdmin):
     list_display = ("name", "dimX", "dimY", "dimZ", "wood_type", "price",)
 
@@ -111,7 +97,7 @@ class NewProjectAdmin(admin.ModelAdmin):
                     'summary_with_margin',
                     'summary_without_margin', 
                     'percent_elements_margin',
-                    'percent_accesories_margin',
+                    'percent_accessories_margin',
                     'percent_additional_margin'
                     )
     search_fields = ('name',)
@@ -175,9 +161,9 @@ class CatalogProductAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'category', 'paints', 'wood', 'collection',
         'worktime_cost', 'elements_cost','' 'elements_margin',
-        'accesories_cost', 'accesories_margin', 'additional_margin',
+        'accessories_cost', 'accessories_margin', 'additional_margin',
         'summary_with_margin', 'summary_without_margin',
-        'percent_elements_margin', 'percent_accesories_margin', 'percent_additional_margin'
+        'percent_elements_margin', 'percent_accessories_margin', 'percent_additional_margin'
     )
     
     raw_id_fields = ('worktimes', 'accessories', 'new_elements', 'document', 'image')

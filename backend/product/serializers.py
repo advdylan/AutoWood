@@ -137,7 +137,7 @@ class ProductionStagesSerializer(serializers.ModelSerializer):
         
 class NewProjectSerializer(serializers.ModelSerializer):
     worktimes = WorktimeSerializer(many=True, read_only=True, source='project_worktime')
-    accessories = AccessorySerializer(many=True, read_only=True, source='project_accesories')
+    accessories = AccessorySerializer(many=True, read_only=True, source='project_accessories')
     elements = NewProjectElementSerializer(many=True, read_only=True, source='project_elements')
     wood = WoodSerializer( read_only=True)
     paints = PaintsSerializer(read_only=True)
@@ -163,15 +163,15 @@ class NewProjectSerializer(serializers.ModelSerializer):
             'wood',
             'collection',
             'elements_margin',
-            'accesories_margin',
+            'accessories_margin',
             'additional_margin',
             'summary_with_margin',
             'summary_without_margin',
             'percent_elements_margin',
-            'percent_accesories_margin',
+            'percent_accessories_margin',
             'percent_additional_margin',
             'elements_cost',
-            'accesories_cost',
+            'accessories_cost',
             'worktime_cost',
             'image',
             'document',

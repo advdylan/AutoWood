@@ -85,15 +85,15 @@ class CatalogProductSerializer(serializers.ModelSerializer):
             'category',
             'collection',
             'elements_margin',
-            'accesories_margin',
+            'accessories_margin',
             'additional_margin',
             'summary_with_margin',
             'summary_without_margin',
             'percent_elements_margin',
-            'percent_accesories_margin',
+            'percent_accessories_margin',
             'percent_additional_margin',
             'elements_cost',
-            'accesories_cost',
+            'accessories_cost',
             'worktime_cost',
             'production_stages'
          
@@ -156,5 +156,3 @@ class ProductionSerializer(serializers.ModelSerializer):
         if 'status' in representation:
             representation['status'] = representation['status'].capitalize()
         return representation
-
-

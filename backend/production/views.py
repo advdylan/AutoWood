@@ -89,15 +89,15 @@ class CatalogProductDetailAPIView(
         catalog_product.wood = wood
         catalog_product.collection = collection
         catalog_product.percent_elements_margin = percent_elements_margin
-        catalog_product.percent_accesories_margin = percent_accesories_margin
+        catalog_product.percent_accessories_margin = percent_accesories_margin
         catalog_product.percent_additional_margin = percent_additional_margin
         catalog_product.elements_margin = elements_margin
-        catalog_product.accesories_margin = accesories_margin
+        catalog_product.accessories_margin = accesories_margin
         catalog_product.additional_margin = additional_margin
         catalog_product.summary_with_margin = summary_with_margin
         catalog_product.summary_without_margin = summary_without_margin
         catalog_product.elements_cost = data["elements_cost"]
-        catalog_product.accesories_cost = data["accesories_cost"]
+        catalog_product.accessories_cost = data["accesories_cost"]
         catalog_product.worktime_cost = data["worktime_cost"]
 
         elements_data = data["elements"]
@@ -369,6 +369,7 @@ def update_order(request):
     order_id = request.data.get("id")
     order_number = request.data.get("order_number")
     print(f"Order id: {order_id}")
+    print(f"Data: {data}")
 
     
     if not data:
@@ -397,10 +398,11 @@ def update_order(request):
                 instance_name = str(instance_stage)
                 data_stage = stage["stage"]["stage_name"]
                 #print(stage["is_done"])
-
+                
                 if instance_name == data_stage:
                     instance.is_done = stage["is_done"]
                     instance.save()
+                    JsonResponse({"Success": f"Production {order} stages updated"},status=200)
                 
         
         return JsonResponse({"Success": f"Production {order} stages updated"})
@@ -426,6 +428,8 @@ def update_order(request):
 
             return JsonResponse({"Message" : f"Parsed date: {parsed_date}"})
         return JsonResponse({"error": "Invalid data format for date"}, status=400)
+    
+    return JsonResponse({f"error": "Invalid data"}, status=400)
         
 
 @api_view(['GET'])
@@ -528,6 +532,7 @@ def update_production_stages(request):
     all_stages = ProductionStage.objects.all()
     ids_sent = []
     deleted_ids = data['deletedIDs']
+    
 
     
     if(deleted_ids):
@@ -535,6 +540,7 @@ def update_production_stages(request):
             ProductionStage.objects.filter(id=id).delete()
 
     for stage in data['data']:
+        print(f"Stage: {stage}")
         if 'id' in stage:
             stage_id = stage['id']
             ids_sent.append(stage_id)

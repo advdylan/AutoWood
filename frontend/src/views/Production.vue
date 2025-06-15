@@ -280,7 +280,9 @@ function calculateWidth(name) {
 
 function updateOrders(id,data,order_number) {
 
-    console.log(data)
+    console.log(`Data: ${data}`)
+    console.log(`Id: ${id}`)
+    console.log(`order_number: ${order_number}`)
     try {
         let response =  axios.patch(`api/v1/production/update`, {
           id: id,
@@ -293,10 +295,9 @@ function updateOrders(id,data,order_number) {
             'Content-Type': 'application/json',
           },
         })
-        console.log('Server response:', response)
-        console.log('Project updated successfully:', response.data)
+        console.log('Project updated successfully:', response.data);
   } catch (error) {
-        console.error('Error saving the project:', error)
+        console.error('Error saving the project:', error.response?.data || error);
   }
 }
 
@@ -392,9 +393,9 @@ watch(productionList, (newList) => {
                     updateNotes(newObject.order.id, note, newObject.order_number)
                 }
 
-                else if (JSON.stringify(oldObject.production_stages) !== JSON.stringify(newObject.production_stages)) {
+                else if (JSON.stringify(oldObject.order.production_stages) !== JSON.stringify(newObject.order.production_stages)) {
                     //console.log(`Stages changes from ${JSON.stringify(oldObject.stages)} \nto ${JSON.stringify(newObject.stages)}`)
-                    updateStages(newObject.order.id, newObject.production_stages, newObject.order_number)
+                    updateStages(newObject.order.id, newObject.order.production_stages, newObject.order_number)
                 }
 
                 else if(JSON.stringify(oldObject.date_of_delivery) !== JSON.stringify(newObject.date_of_delivery)) {

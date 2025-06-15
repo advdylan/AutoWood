@@ -17,7 +17,7 @@ class Wood(models.Model):
 
 class Paints(models.Model):
     name = models.CharField(max_length=30)
-    cost = models.FloatField(blank=True)
+    cost = models.FloatField(blank=True,null=True)
     volume = models.DecimalField(help_text="litr", blank=True, max_digits=5, decimal_places=2)
 
     def __str__(self):

@@ -186,6 +186,7 @@ def save_catalog_product(request):
     additional_margin = request.POST.get('additional_margin')
     summary_with_margin = request.POST.get('summary_with_margin')
     summary_without_margin = request.POST.get('summary_without_margin')
+    
 
     elements_post = request.POST.get('elements')
     try:
@@ -207,6 +208,14 @@ def save_catalog_product(request):
         print(accesories_data)
     except json.JSONDecodeError:
         return JsonResponse({'status': 'error', 'message': 'Invalid JSON format for accesories'}, status=400)
+    
+    production_stages_post = request.POST.get('production_stages')
+    print(production_stages_post)
+    try:
+        production_stages = json.loads(production_stages_post)
+        print(production_stages)
+    except json.JSONDecodeError:
+        return JsonResponse({'status': 'error', 'message': 'Invalid JSON format for production stages'}, status=400)
 
 
     percent_elements_margin = request.POST.get('percent_elements_margin')
@@ -215,6 +224,8 @@ def save_catalog_product(request):
     elements_cost = request.POST.get('elements_cost')
     accesories_cost = request.POST.get('accesories_cost')
     worktime_cost =  request.POST.get('worktime_cost')
+    
+    print(f"ProductionStages: {production_stages}")
 
 
     """ customer_post = request.POST.get('customer')
@@ -252,15 +263,15 @@ def save_catalog_product(request):
                 collection=collection,
                 wood=wood,
                 elements_margin=elements_margin,
-                accesories_margin=accesories_margin,
+                accessories_margin=accesories_margin,
                 additional_margin=additional_margin,
                 summary_with_margin=summary_with_margin,
                 summary_without_margin=summary_without_margin,
                 percent_elements_margin=percent_elements_margin,
-                percent_accesories_margin=percent_accesories_margin,
+                percent_accessories_margin=percent_accesories_margin,
                 percent_additional_margin=percent_additional_margin,
                 elements_cost = elements_cost,
-                accesories_cost = accesories_cost,
+                accessories_cost = accesories_cost,
                 worktime_cost = worktime_cost,
 
                 
@@ -346,6 +357,19 @@ def save_catalog_product(request):
                 )
 
                 catalog_product.accessories.add(accessory_type)
+
+            # Handle production stages
+
+            for stage in production_stages:
+                print(f"Stage: {stage}")
+                production_stage,created = ProductionStage.objects.get_or_create(stage_name=stage["stage_name"])
+                print(production_stage)
+                OrderProductionStage.objects.create(
+                    catalog_product=catalog_product,
+                    production_stage=production_stage,
+                    is_done=False
+                )
+                catalog_product.production_stages.add()
             
 
             
@@ -385,12 +409,15 @@ def update_order(request):
     print(order.order_number)
 
     required_keys = ['id', 'stage_name', 'shortcut']
-    if not all(all(k in item for k in required_keys) for item in data):
+
+    if all(all(k in item for k in required_keys) for item in data):
         #Stages case
         print(f"Data in more than one: {data}")
         print(f"Order: {order}")
         order_production_stages = OrderProductionStage.objects.filter(production=order)
         print(f"Order_production_stages with given id: {order_production_stages}")
+        for stage in order_production_stages:
+            print(stage)
         
         for instance in order_production_stages:
             for stage in data:
@@ -403,7 +430,7 @@ def update_order(request):
                 if instance_name == data_stage:
                     instance.is_done = stage["is_done"]
                     instance.save()
-                    JsonResponse({"Success": f"Production {order} stages updated"},status=200)
+                    #JsonResponse({"Success": f"Production {order} stages updated"},status=200)
                 
         
         return JsonResponse({"Success": f"Production {order} stages updated"})

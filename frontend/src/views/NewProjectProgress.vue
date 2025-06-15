@@ -368,7 +368,7 @@ formData.append('worktime_cost', worktimeCost.value)
 formData.append('customer', JSON.stringify(customer.value))
 files.value.forEach((file, index) => {
 formData.append(`files[${index}]`, file)
-}),formData.append('productionSteps', JSON.stringify(chosenProductionSteps.value))
+}),formData.append('production_stages', JSON.stringify(chosenProductionSteps.value))
 
 
 const formDataObject = {};
@@ -442,7 +442,8 @@ else {
 }
 
 function resetInput() {
-
+  
+    /*
     projectName.value  = ''
     selectedWood.value = ''
     selectedCategory.value = ''
@@ -454,6 +455,7 @@ function resetInput() {
     marginA.value = 0
     marginB.value = 0
     marginC.value = 0
+    */
   }
 </script>
 

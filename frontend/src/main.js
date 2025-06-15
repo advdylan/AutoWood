@@ -20,8 +20,8 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 
 
-axios.defaults.baseURL = "https://autowood.fly.dev"
-//axios.defaults.baseURL = "http://127.0.0.1:8000"
+//axios.defaults.baseURL = "https://autowood.fly.dev"
+axios.defaults.baseURL = "http://127.0.0.1:8000"
 
 
 const app = createApp(App)

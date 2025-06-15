@@ -384,7 +384,8 @@ def update_order(request):
 
     print(order.order_number)
 
-    if all("stage" in item for item in data):
+    required_keys = ['id', 'stage_name', 'shortcut']
+    if not all(all(k in item for k in required_keys) for item in data):
         #Stages case
         print(f"Data in more than one: {data}")
         print(f"Order: {order}")
